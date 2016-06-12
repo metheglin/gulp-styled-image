@@ -12,13 +12,13 @@ describe("test gulp-styled-image", function(){
       .pipe( styledimage(options))
   }
 
-  it("check custom", function(done){
+  it("check sass_mixin_default", function(done){
     var contents = fs.readFileSync(
       libpath.join(__dirname, "expected", "_preset_sass_mixin_default.scss")
     ).toString();
     // console.log(contents)
     check({
-      // root: "http://example.com",
+      root: "http://example.com/",
       formats: [
         {
           prefix: "inc--",
@@ -43,7 +43,7 @@ describe("test gulp-styled-image", function(){
     ).toString();
     // console.log(contents)
     check({
-      // root: "http://example.com",
+      root: "/assets/images/",
       formats: [
         {
           prefix: "inc--",

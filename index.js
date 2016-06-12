@@ -15,8 +15,8 @@ module.exports = function (param) {
   var options =  _.defaults(
     param,
     {
-      name: "_themes_images_vars.scss",
-      root: "/assets/images/themes/",
+      name: "_images.scss",
+      root: "/assets/images/",
       formats: [
         {
           prefix: "",
@@ -85,7 +85,7 @@ module.exports = function (param) {
       },
       sass_mixin_relative: function( label_name, path, w, h ) {
         var h_ratio = ( h/w ) * 100
-        return "@mixin " + label_name + "-rel() {" + 
+        return "@mixin " + label_name + "() {" + 
           "display:block;" +
           "width:100%" + 
           "height:auto" + 
@@ -108,12 +108,13 @@ module.exports = function (param) {
           img.file, 
           _.pick(f, ['prefix', 'suffix', 'separator'])
         )
+        var img_path    = image_path( img.file )
 
         if ( typeof generator === 'string' || generator instanceof String ) {
           generator = presets[ generator ] ? presets[ generator ] : generator
         }
         if ( generator instanceof Function ) {
-          generated = generator( label, img.file, img.width, img.height )
+          generated = generator( label, img_path, img.width, img.height )
         } else if ( ! generator ) {
           generated = ""
         } else {
@@ -129,7 +130,7 @@ module.exports = function (param) {
 
   function label_name( filepath, options ) {
     var invalidChars = /[^0-9a-zA-Z-_]/g
-    var prefix    = options && (typeof options.prefix !== "undefined") ? options.prefix : "img_"
+    var prefix    = options && (typeof options.prefix !== "undefined") ? options.prefix : ""
     var suffix    = options && (typeof options.suffix !== "undefined") ? options.suffix : ""
     var separator = (options && options.separator) || "-"
     // parse available since node v6
@@ -142,6 +143,10 @@ module.exports = function (param) {
     pathes = _.map( pathes, function(p){ return p.replace(invalidChars, '') })
     pathes = _.filter( pathes, function(p){ return p !== "" })
     return prefix + pathes.join( separator ) + suffix
+  }
+
+  function image_path( filepath ) {
+    return options.root + filepath
   }
 
   return through2.obj( process, flush_styled_image );
