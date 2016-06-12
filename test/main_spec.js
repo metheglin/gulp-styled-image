@@ -37,6 +37,32 @@ describe("test gulp-styled-image", function(){
     }));
   });
 
+  it("check multiple", function(done){
+    var contents = fs.readFileSync(
+      libpath.join(__dirname, "expected", "_multiple.scss")
+    ).toString();
+    check({
+      root: "/assets/images/",
+      formats: [
+        {
+          generator: "sass_mixin_default"
+        },
+        {
+          generator: "sass_vars_default"
+        },
+        {
+          generator: "sass_mixin_relative"
+        },
+      ]
+    }).pipe(through2.obj(function(newFile, enc, cb){
+      should.exist(newFile);
+      should.exist(newFile.contents);
+      contents.should.eql(newFile.contents.toString());
+      cb();
+      done();
+    }));
+  });
+
   it("check custom", function(done){
     var contents = fs.readFileSync(
       libpath.join(__dirname, "expected", "_custom_mixin.scss")
