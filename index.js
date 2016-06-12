@@ -79,9 +79,9 @@ module.exports = function (param) {
           "}"
       },
       sass_vars_default: function( label_name, path, w, h ) {
-        return "$" + label_name + "__path: " + path + ";\n" +
-          "$" + label_name + "__width: " + w + ";\n" +
-          "$" + label_name + "__height: " + h + ";\n"
+        return "$" + label_name + "__path: '" + path + "';\n" +
+          "$" + label_name + "__width: " + w + "px;\n" +
+          "$" + label_name + "__height: " + h + "px;\n"
       },
       sass_mixin_relative: function( label_name, path, w, h ) {
         var h_ratio = ( h/w ) * 100
