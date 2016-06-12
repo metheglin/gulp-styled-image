@@ -87,8 +87,8 @@ module.exports = function (param) {
         var h_ratio = ( h/w ) * 100
         return "@mixin " + label_name + "() {" + 
           "display:block;" +
-          "width:100%" + 
-          "height:auto" + 
+          "width:100%;" + 
+          "height:auto;" + 
           "padding-bottom:" + h_ratio + "%;" +
           "background-image:" + "url(" + path + ");" +
           "background-size:contain;" +
